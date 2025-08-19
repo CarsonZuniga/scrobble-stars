@@ -1,3 +1,5 @@
+import time
+from app.config import SLEEP_TIME_SECONDS
 from app.subsonic import get_all_albums, get_songs, set_rating
 from app.last_fm import get_track_listens
 import statistics
@@ -58,6 +60,8 @@ def main():
 
         except Exception as e:
             logger.error(f"An error occurred: {e}")
+
+        time.sleep(SLEEP_TIME_SECONDS)
 
 if __name__ == "__main__":
     main()

@@ -14,6 +14,7 @@ NAVIDROME_PASSWORD=your_password
 SUBSONIC_API_VERSION=1.16.1
 CLIENT=scrobble-stars
 LASTFM_API_KEY=your_lastfm_api_key
+SLEEP_TIME_SECONDS=86400
 ```
 
 - **NAVIDROME_URL** – Navidrome server API URL (usually ends with `/rest`)  
@@ -21,6 +22,7 @@ LASTFM_API_KEY=your_lastfm_api_key
 - **SUBSONIC_API_VERSION** – API version (e.g. `1.16.1`)  
 - **CLIENT** – client name that shows up in Subsonic logs  
 - **LASTFM_API_KEY** – API key from [Last.fm](https://www.last.fm/api/account/create)  
+- **SLEEP_TIME_SECONDS** - Time in seconds to await before next scan (ie. every 24 hours as default)
 
 ## Run with Docker
 
