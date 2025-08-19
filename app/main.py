@@ -1,6 +1,15 @@
 from app.subsonic import get_all_albums, get_songs, set_rating
 from app.last_fm import get_track_listens
 import statistics
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.StreamHandler()]
+)
+
+logger = logging.getLogger(__name__)
 
 def get_stars(plays, counts):
     mean = statistics.mean(counts)
@@ -24,7 +33,7 @@ def main():
         try:
             albums = get_all_albums()
             for album in albums:
-                print(f"Album: {album['name']}")
+                logger.info(f"Album: {album['name']}")
                 songs = get_songs(album['id'])
                 track_titles = [song['title'] for song in songs]
                 playcounts = get_track_listens(album['artist'], album['name'], track_titles)
@@ -38,14 +47,14 @@ def main():
 
                     # Relative rating (most popular track = 5★)
                     stars = get_stars(plays, playcounts.values())
-                    print(f". {title} -> plays={plays}, rating={stars}★")
+                    logger.info(f". {title} -> plays={plays}, rating={stars}★")
                     try:
                         set_rating(track_id, stars)
                     except Exception as e:
-                        print(f"  Failed to set rating: {e}")
+                        logger.warning(f"  Failed to set rating: {e}")
 
         except Exception as e:
-            print(f"An error occurred: {e}")
+            logger.error(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     main()
