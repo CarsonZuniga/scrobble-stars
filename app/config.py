@@ -1,0 +1,8 @@
+import os
+
+NAVIDROME_URL = os.getenv("NAVIDROME_URL")
+USERNAME = os.getenv("NAVIDROME_USERNAME")
+PASSWORD = os.getenv("NAVIDROME_PASSWORD")
+API_VERSION = os.getenv("SUBSONIC_API_VERSION")
+CLIENT = os.getenv("CLIENT")
+LASTFM_API_KEY = os.getenv("LASTFM_API_KEY")
