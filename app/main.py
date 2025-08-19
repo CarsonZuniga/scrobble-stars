@@ -33,25 +33,28 @@ def main():
         try:
             albums = get_all_albums()
             for album in albums:
-                logger.info(f"Album: {album['name']}")
-                songs = get_songs(album['id'])
-                track_titles = [song['title'] for song in songs]
-                playcounts = get_track_listens(album['artist'], album['name'], track_titles)
-                max_count = max(playcounts.values() or [0])
-                if max_count == 0:
-                    continue
-                for song in songs:
-                    title = song["title"]
-                    track_id = song["id"]
-                    plays = playcounts.get(title, 0)
+                try:
+                    logger.info(f"Album: {album['name']}")
+                    songs = get_songs(album['id'])
+                    track_titles = [song['title'] for song in songs]
+                    playcounts = get_track_listens(album['artist'], album['name'], track_titles)
+                    max_count = max(playcounts.values() or [0])
+                    if max_count == 0:
+                        continue
+                    for song in songs:
+                        title = song["title"]
+                        track_id = song["id"]
+                        plays = playcounts.get(title, 0)
 
-                    # Relative rating (most popular track = 5★)
-                    stars = get_stars(plays, playcounts.values())
-                    logger.info(f". {title} -> plays={plays}, rating={stars}★")
-                    try:
-                        set_rating(track_id, stars)
-                    except Exception as e:
-                        logger.warning(f"  Failed to set rating: {e}")
+                        # Relative rating (most popular track = 5★)
+                        stars = get_stars(plays, playcounts.values())
+                        logger.info(f". {title} -> plays={plays}, rating={stars}★")
+                        try:
+                            set_rating(track_id, stars)
+                        except Exception as e:
+                            logger.warning(f"  Failed to set rating: {e}")
+                except Exception as e:
+                    logger.error(f"Error processing album {album['name']}: {e}")
 
         except Exception as e:
             logger.error(f"An error occurred: {e}")
